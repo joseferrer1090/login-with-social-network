@@ -2,7 +2,19 @@ import React, { Component } from "react";
 import "./index.css";
 import "../../node_modules/materialize-css/dist/css/materialize.css";
 
+import FacebookLogin from "react-facebook-login";
+
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.responseFacebook = this.responseFacebook.bind(this);
+    this.onFailure = this.onFailure.bind(this);
+  }
+
+  responseFacebook(response) {}
+
+  onFailure(err) {}
+
   render() {
     const style_justify = {
       textAlign: "justify"
@@ -28,10 +40,18 @@ class Login extends Component {
               </div>
               <div className="card-action">
                 <div className="" style={style_center}>
-                  <button className="waves-effects waves-light btn-large btn-facebook">
-                    {" "}
-                    <i className="fa fa-facebook" /> facebook
-                  </button>{" "}
+                  <FacebookLogin
+                    appId="198995737492494"
+                    autoLoad={false}
+                    fields="name, email, picture.width(120)"
+                    callback={this.responseFacebook}
+                    onFailure={this.onFailure}
+                    textButton="Facebook"
+                    cssClass={
+                      "waves-effects waves-light btn-large btn-facebook"
+                    }
+                    icon={"fa fa-facebook"}
+                  />
                   <button className="waves-effects waves-light btn-large btn-google">
                     {" "}
                     <i className="fa fa-google-plus" /> Google{" "}
