@@ -1,4 +1,4 @@
-# Redux Router Skeleton
+# Login social network using react and redux 
 
 Simple skeleton project ready to be used in everything you want! :)
 
