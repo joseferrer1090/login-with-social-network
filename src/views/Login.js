@@ -51,7 +51,7 @@ class Login extends Component {
                       "waves-effects waves-light btn-large btn-facebook"
                     }
                     icon={"fa fa-facebook"}
-                  />
+                  />{" "}
                   <button className="waves-effects waves-light btn-large btn-google">
                     {" "}
                     <i className="fa fa-google-plus" /> Google{" "}
