@@ -3,6 +3,7 @@ import "./index.css";
 import "../../node_modules/materialize-css/dist/css/materialize.css";
 
 import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -12,6 +13,7 @@ class Login extends Component {
       isLogged: false
     };
     this.responseFacebook = this.responseFacebook.bind(this);
+    this.responseGoogle = this.responseGoogle.bind(this);
     this.onFailure = this.onFailure.bind(this);
   }
 
@@ -33,6 +35,23 @@ class Login extends Component {
     });
   }
 
+  responseGoogle(response) {
+    //TODO
+    console.log(response);
+    localStorage.setItem(
+      "googleData",
+      JSON.stringify({
+        token: response.token,
+        email: response.profileObj.email,
+        name: response.profileObj.name,
+        picture: response.profileObj.imageUrl,
+        social: "google"
+      })
+    );
+    this.setState({
+      isLogged: true
+    });
+  }
   onFailure(err) {
     console.log("====================================");
     console.log(err);
@@ -69,7 +88,7 @@ class Login extends Component {
                 <div className="" style={style_center}>
                   <FacebookLogin
                     appId="198995737492494"
-                    autoLoad={true}
+                    autoLoad={false}
                     fields="name, email, picture.width(120)"
                     callback={this.responseFacebook}
                     onFailure={this.onFailure}
@@ -79,10 +98,16 @@ class Login extends Component {
                     }
                     icon={"fa fa-facebook"}
                   />{" "}
-                  <button className="waves-effects waves-light btn-large btn-google">
-                    {" "}
-                    <i className="fa fa-google-plus" /> Google{" "}
-                  </button>
+                  <GoogleLogin
+                    clientId="861238651764-lq5v3ce3na5oo57hdbd6c70nqq3tr88q.apps.googleusercontent.com"
+                    autoLoad={false}
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.onFailure}
+                    className="waves-effects waves-light btn-large btn-google"
+                  >
+                    <i className="fa fa-google" />
+                    <span> Google </span>
+                  </GoogleLogin>
                 </div>
               </div>
             </div>
