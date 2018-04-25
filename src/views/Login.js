@@ -3,19 +3,46 @@ import "./index.css";
 import "../../node_modules/materialize-css/dist/css/materialize.css";
 
 import FacebookLogin from "react-facebook-login";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLogged: false
+    };
     this.responseFacebook = this.responseFacebook.bind(this);
     this.onFailure = this.onFailure.bind(this);
   }
 
-  responseFacebook(response) {}
+  responseFacebook(response) {
+    //TODO
+    console.log(response);
+    localStorage.setItem(
+      "fbData",
+      JSON.stringify({
+        token: response.token,
+        email: response.email,
+        name: response.name,
+        picture: response.picture.data.url,
+        social: "fb"
+      })
+    );
+    this.setState({
+      isLogged: true
+    });
+  }
 
-  onFailure(err) {}
+  onFailure(err) {
+    console.log("====================================");
+    console.log(err);
+    console.log("====================================");
+  }
 
   render() {
+    if (this.state.isLogged) {
+      return <Redirect to="/home/" />;
+    }
     const style_justify = {
       textAlign: "justify"
     };
@@ -42,7 +69,7 @@ class Login extends Component {
                 <div className="" style={style_center}>
                   <FacebookLogin
                     appId="198995737492494"
-                    autoLoad={false}
+                    autoLoad={true}
                     fields="name, email, picture.width(120)"
                     callback={this.responseFacebook}
                     onFailure={this.onFailure}
