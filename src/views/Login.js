@@ -58,6 +58,14 @@ class Login extends Component {
     console.log("====================================");
   }
 
+  componentWillMount() {
+    if (localStorage.getItem("fbData") || localStorage.getItem("googleData")) {
+      this.setState({
+        isLogged: true
+      });
+    }
+  }
+
   render() {
     if (this.state.isLogged) {
       return <Redirect to="/home/" />;
